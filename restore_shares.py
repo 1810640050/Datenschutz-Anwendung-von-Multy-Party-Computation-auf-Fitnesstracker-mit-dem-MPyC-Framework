@@ -9,20 +9,22 @@ import pickle
 
 
 async def main():
-    """every party samples random values 'a' and 'b', but we only add the 'a' and 'b' of the first party and ignore the rest"""
     await mpc.start()
 
-    name = "add.py_" + str(mpc.pid)
+    # define name of file
+    name = "share_" + str(mpc.pid) + ".json"
 
-
+    # get computed string of shares
     inputstring = rwj.read_jsonfile(name)
     val = inputstring["data_str"]
 
+    # restore to field
     a = pickle.loads(base64.decodebytes(val.encode('utf-8')))
 
+    # compute shares
     aa = await mpc.output(a)
 
-    print(f"{aa}")
+    print(f"Input Clear Value: {aa}")
     await mpc.shutdown()
 
 

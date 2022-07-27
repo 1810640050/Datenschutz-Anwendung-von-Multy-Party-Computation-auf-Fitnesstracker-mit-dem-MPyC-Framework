@@ -1,49 +1,37 @@
 import random
+
+from json_inout import ReadWriteJson as rwj
 from mpyc.runtime import mpc
 import csv
 import base64
 import pickle
-import json
-from json_inout import ReadWriteJson as rwj
 
 
 secint = mpc.SecInt()
 
+
 async def main():
     await mpc.start()
+    # define name for files with shares -> share_x.json
     name = "share_" + str(mpc.pid) + ".json"
-    random_input = rwj.read_jsonfile("ran_val")["ranval"]
 
-    n = mpc.input(secint(random_input))[0]
+    # get input from json file
+    ran = rwj.read_jsonfile("input_values.json")
+    ran = ran["value"]
 
+    # take input and start mpc computing
+    a = mpc.input(secint(ran))[0]  # array von inputs von jedem knoten, immer den ersten wert [0] - node 0
 
-    gather_n = await mpc.gather(n)
-    str_of_gather = str(gather_n)
+    # get Field of secint
+    sid_data_gf = await mpc.gather(a)
+    # convert to string
+    sid_data_str = base64.encodebytes(pickle.dumps(sid_data_gf)).decode()
 
-    print("value",gather_n.value)
-
-
-    str_decode_n = base64.encodebytes(pickle.dumps(gather_n)).decode()
-    print("sid_data_str ", str_decode_n)
-    sid_data_restore = pickle.loads(base64.decodebytes(str_decode_n.encode('utf-8')))
-
-    dict_n = {
-        "random input": random_input,
-        "int": str_of_gather,
-        "string": str(str_decode_n),
-        "restore": str(sid_data_restore)
+    # store string in dictionary and save to json
+    dict = {
+        "data_str": sid_data_str,
     }
-
-    print(dict_n)
-
-    rwj.create_jsonfile(name, 'w', dict_n)
-
-    list_values = rwj.read_jsonfile(name)
-
-    print("random input ", type(list_values["random input"]), list_values["random input"])
-    print("int ", type(list_values["int"]), list_values["int"])
-    print("string ", type(list_values["string"]), list_values["string"])
-    print("restore ", type(list_values["restore"]), list_values["restore"])
+    rwj.create_jsonfile(name,'w', dict)
 
 
     await mpc.shutdown()
