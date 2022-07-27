@@ -1,6 +1,6 @@
 import random
 from mpyc.runtime import mpc
-from json_inout import ReadWriteJson as rwj
+from InOut import ReadWriteJson as rwj
 
 ran_val = random.randint(0,100)
 

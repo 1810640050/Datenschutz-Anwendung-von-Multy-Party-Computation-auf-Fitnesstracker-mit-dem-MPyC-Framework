@@ -1,6 +1,6 @@
 import random
 
-from json_inout import ReadWriteJson as rwj
+from InOut import ReadWriteJson as rwj
 from mpyc.runtime import mpc
 import csv
 import base64
@@ -18,6 +18,9 @@ async def main():
     # get input from json file
     ran = rwj.read_jsonfile("input_values.json")
     ran = ran["value"]
+
+    #if type(ran) == str:
+
 
     # take input and start mpc computing
     a = mpc.input(secint(ran))[0]  # array von inputs von jedem knoten, immer den ersten wert [0] - node 0

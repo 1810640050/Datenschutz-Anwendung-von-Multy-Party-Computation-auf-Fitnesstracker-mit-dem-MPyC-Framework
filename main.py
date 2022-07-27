@@ -1,5 +1,5 @@
 import sys
-from json_inout import ReadWriteJson as rwj
+from InOut import ReadWriteJson as rwj
 
 
 def ShowMenu(*args):

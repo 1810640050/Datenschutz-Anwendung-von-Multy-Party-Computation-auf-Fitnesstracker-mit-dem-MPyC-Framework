@@ -1,3 +1,4 @@
+import base64
 import json
 
 
@@ -5,6 +6,21 @@ def _get_Path(filename):
 	path = "storage/"
 	PATH = path + filename
 	return PATH
+
+class GetIntOfStr():
+	def __init__(self):
+		pass
+	def GetIntValue(str_value):
+		sentence = ""
+		ascii_vals = []
+		for i in str_value:
+			num = ord(i)
+			sentence += str(f"{num:0=3d}")
+		print("sentence ", sentence)
+		sentence = ""
+
+	def GetStrValue(int_value):
+		return base64.encodebytes(int_value.decode())
 
 class ReadWriteJson():
 	def __init__(self):

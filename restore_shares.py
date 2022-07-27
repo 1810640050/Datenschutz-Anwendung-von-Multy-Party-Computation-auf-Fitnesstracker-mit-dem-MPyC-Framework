@@ -1,7 +1,7 @@
 
 import random
 
-from json_inout import ReadWriteJson as rwj
+from InOut import ReadWriteJson as rwj
 from mpyc.runtime import mpc
 import csv
 import base64
