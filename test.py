@@ -1,4 +1,4 @@
 from InOut import GetIntOfStr as gios
 
 
-gios.GetIntValue("H a l l o W e l t")
+gios.get_Int_Value("H a l l o W e l t")
