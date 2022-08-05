@@ -1,13 +1,9 @@
-import json
-import random
-
-from InOut import ReadWriteJson as rwj
-from InOut import ReadWriteCSV as rwcsv
-from mpyc.runtime import mpc
-import csv
 import base64
+import json
 import pickle
 
+from InOut import ReadWriteCSV as rwcsv
+from mpyc.runtime import mpc
 
 secint = mpc.SecInt()
 
