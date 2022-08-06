@@ -1,0 +1,41 @@
+{% extends "layouts/main.html" %}
+
+{% block content %}
+
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Site</title>
+</head>
+<body>
+<h1>Administration der Daten</h1>
+<div class="container">
+
+  <!-- columns should be the immediate child of a .row -->
+  <div class="row">
+    <div class="six column"><input type="button" value="Create Inputvalues"></div>
+    <div class="six columns"></div>
+  </div>
+
+  <!-- just use a number and class 'column' or 'columns' -->
+
+  <div class="row">
+    <div class="six column"><input type="button" value="Create Shares"></div>
+    <div class="six columns"></div>
+  </div>
+
+
+  <!-- there are a few shorthand columns widths as well -->
+  <div class="row">
+    <div class="six column"><input type="button" value="Restore Shares"></div>
+    <div class="six column"></div>
+  </div>
+
+
+</div>
+
+
+
+</body>
+</html>
+
+{% endblock %}
