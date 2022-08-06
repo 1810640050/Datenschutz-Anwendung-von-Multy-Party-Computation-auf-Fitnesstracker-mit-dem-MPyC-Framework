@@ -15,8 +15,17 @@
 <p>Platzhalter</p>
 
 <h3>CSV Datei öffnen:</h3>
-<p>Platzhalter</p>
-
-
+<form>
+  <div class="row">
+    <div class="six columns">
+      <label for="exampleEmailInput">Insert Filename</label>
+      <input class="u-full-width" type="email" id="FilenameInput">
+    </div>
+    <div class="six columns">
+        <label for="exampleMessage">     </label>
+    </div>
+  </div>
+  <input class="button-primary" type="submit" onclick="window.location.href = '../show_data';" value="Öffnen" >
+</form>
 
 {% endblock %}

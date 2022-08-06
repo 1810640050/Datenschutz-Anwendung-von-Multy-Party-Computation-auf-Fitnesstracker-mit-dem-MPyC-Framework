@@ -1,0 +1,12 @@
+{% extends "layouts/main.html" %}
+
+{% block content %}
+    <h1>Header 1</h1>
+<h3>Dateien im Storage:</h3>
+<ul>
+    {% for i in list %}
+        <li>{{i}}</li>
+    {% endfor %}
+</ul>
+
+{% endblock %}
