@@ -37,9 +37,9 @@ async def main():
         clear_values.append([id, clear_date, int(clear_value_of_steps)])
     print("\nDurchschnitt aller Monate aller Jahre:")
     filename = "Averages.csv"
-    ueberschrift = ["Durchschnitt aller Monate aller Jahre", "Steps"]
+    header = ["Zeitraum", "Steps"]
     if mpc.pid == 0:
-        rwcsv.WriteCSV(filename, 'w', ueberschrift)
+        rwcsv.WriteCSV(filename, 'w', header)
     months = defs.MONTHS
     years = defs.YEARS
 
