@@ -65,9 +65,6 @@ async def main():
             counter = 0
 
     print("\nDurchschnitt aller Jahre:")
-    ueberschrift2 = ["Durchschnitt aller Jahre", "Steps"]
-    if mpc.pid == 0:
-        rwcsv.WriteCSV(filename, 'a', ueberschrift2)
     years = defs.YEARS
     for year in years:
         steps = 0
@@ -88,9 +85,6 @@ async def main():
                 rwcsv.WriteCSV(filename, 'a', [searchstring, round(steps / counter)])
 
     print("\nDurchschnitt gesamt:")
-    ueberschrift3 = ["Durchschnitt gesamt", "Steps"]
-    if mpc.pid == 0:
-        rwcsv.WriteCSV(filename, 'a', ueberschrift3)
     steps = 0
     divisor = len(clear_values)
     for i in clear_values:
