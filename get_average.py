@@ -1,9 +1,10 @@
-from InOut import ReadWriteCSV as rwcsv
+from InOut import ReadWriteJson as rwj, ReadWriteCSV as rwcsv
 from InOut import ComputeDates as comDt
 import base64
 import pickle
 import json
 from mpyc.runtime import mpc
+import definitions as defs
 
 
 async def main():
@@ -34,74 +35,76 @@ async def main():
         clear_date = comDt.get_Datetime_of_Timestamp(clear_value_of_timestamp).date()
 
         clear_values.append([id, clear_date, int(clear_value_of_steps)])
-    await mpc.shutdown()
+    print("\nDurchschnitt aller Monate aller Jahre:")
+    filename = "Averages.csv"
+    ueberschrift = ["Durchschnitt aller Monate aller Jahre", "Steps"]
+    if mpc.pid == 0:
+        rwcsv.WriteCSV(filename, 'w', ueberschrift)
+    months = defs.MONTHS
+    years = defs.YEARS
 
-    try:
-        print("1. Durchschnitt ein Monat\n2. Durchschnitt ein Jahr\n3. Durchschnitt aller Monate eines Jahres\n4. Durchschnitt gesamt\n5. Beenden")
-        choice = input("Ihre Eingabe:")
-
-        if choice == 1 or choice == '1':
-            print("Menü 1: Durchschnitt eines Monats gewählt.")
+    for i in years:
+        for j in months:
             steps = 0
             counter = 0
-            jahr = input("Jahr wählen (4-stellig): ")
-            monat = input("Monat wählen (2-stellig): ")
-            searchstring = str(jahr) + "-" + str(monat)
-            for i in clear_values:
-                datum = str(i[1])
+            searchstring = i + "-" + j
+            for k in clear_values:
+                datum = str(k[1])
                 if datum.startswith(searchstring):
-                    steps += i[2]
+                    steps += k[2]
                     counter += 1
-            print("Steps: ", steps, " Counter: ", counter)
-            print("Monatsschnitt von " + searchstring + ": ", round(steps / counter))
-
-        elif choice == 2 or choice == '2':
-            print("Menü 2: Durchschnitt eines Jahres gewählt.")
-            jahr = input("Jahr eingeben")
+            if counter < 1:
+                print(searchstring, ": No Data awailable")
+                if mpc.pid == 0:
+                    rwcsv.WriteCSV(filename, 'a',[searchstring, "No Data awailable"])
+            else:
+                print(searchstring, ": ", round(steps / counter))
+                if mpc.pid == 0:
+                    rwcsv.WriteCSV(filename, 'a', [searchstring, round(steps / counter)])
             steps = 0
             counter = 0
-            jahr = input("Jahr wählen (4-stellig): ")
-            searchstring = str(jahr)
-            for i in clear_values:
-                datum = str(i[1])
-                if datum.startswith(searchstring):
-                    steps += i[2]
-                    counter += 1
-            print("Steps: ", steps, " Counter: ", counter)
-            print("Jahre3sschnitt von " + searchstring + ": ", round(steps / counter))
 
-        elif choice == 3 or choice == '3':
-            print("Menü 3: Durchschnitt aller Monate eines Jahres gewählt.")
-            jahr = input("Jahr wählen (4-stellig): ")
-            all_months = []
-            for i in range(1,13):
-                steps = 0
-                counter = 0
-                searchstring = str(jahr) + "-" + "{:02d}".format(i)
-                for i in clear_values:
-                    datum = str(i[1])
-                    if datum.startswith(searchstring):
-                        steps += i[2]
-                        counter += 1
-                erg = round(steps/counter)
-                erg_string = str(searchstring) + ": " + str(erg)
-                all_months.append(erg_string)
-            for i in all_months:
-                print(i)
-
-        elif choice == 4 or choice == '4':
-            print("Menü 4: Durchschnitt gesamt gewählt")
-            steps = 0
-            divisor = len(clear_values)
-            for i in clear_values:
+    print("\nDurchschnitt aller Jahre:")
+    ueberschrift2 = ["Durchschnitt aller Jahre", "Steps"]
+    if mpc.pid == 0:
+        rwcsv.WriteCSV(filename, 'a', ueberschrift2)
+    years = defs.YEARS
+    for year in years:
+        steps = 0
+        counter = 0
+        searchstring = year
+        for i in clear_values:
+            datum = str(i[1])
+            if datum.startswith(searchstring):
                 steps += i[2]
-            print("Average steps all Time: ", round(steps / divisor))
-        elif choice == 5 or choice == '5':
-            a = 0
+                counter += 1
+        if counter < 1:
+            print(searchstring, ": No Data awailable")
+            if mpc.pid == 0:
+                rwcsv.WriteCSV(filename, 'a', [searchstring, "No Data awailable"])
         else:
-            print("Eingabefehler -- ELSE --")
-    except:
-        print("Eingabefehler -- Exception --")
+            print(searchstring, ": ", round(steps / counter))
+            if mpc.pid == 0:
+                rwcsv.WriteCSV(filename, 'a', [searchstring, round(steps / counter)])
 
+    print("\nDurchschnitt gesamt:")
+    ueberschrift3 = ["Durchschnitt gesamt", "Steps"]
+    if mpc.pid == 0:
+        rwcsv.WriteCSV(filename, 'a', ueberschrift3)
+    steps = 0
+    divisor = len(clear_values)
+    for i in clear_values:
+        steps += i[2]
+    if divisor < 1:
+        print(searchstring, ": No Data awailable")
+        if mpc.pid == 0:
+            rwcsv.WriteCSV(filename, 'a', [searchstring, "No Data awailable"])
+    else:
+        print(searchstring, ": ", round(steps / divisor))
+        if mpc.pid == 0:
+            rwcsv.WriteCSV(filename, 'a', ["Gesamt", round(steps / divisor)])
+    print("Average steps all Time: ", round(steps / divisor))
 
+    await mpc.shutdown()
 mpc.run(main())
+

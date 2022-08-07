@@ -5,8 +5,10 @@
 <head>
     <meta charset="UTF-8">
     <title>Sichten Versicherung</title>
+
 </head>
 <body>
+
 <h1>Übersicht Sichten der Versicherung</h1>
 <form>
   <div class="row">
@@ -43,6 +45,13 @@
   </div>
   <input class="button-primary" type="submit" value="Daten anzeigen">
 </form>
+
+<ul>
+    {% for i in list %}
+        <li>{{i}}</li>
+    {% endfor %}
+</ul>
+
 </body>
 </html>
 

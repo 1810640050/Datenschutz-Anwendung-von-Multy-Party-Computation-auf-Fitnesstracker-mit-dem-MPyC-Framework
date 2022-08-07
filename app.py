@@ -1,3 +1,5 @@
+import json
+
 from flask import Flask, request, render_template, session, redirect, url_for, send_from_directory
 from werkzeug.utils import secure_filename
 from datetime import datetime
@@ -10,6 +12,8 @@ ALLOWED_EXTENSIONS = set(['csv'])
 def allowed_file(filename):
     return '.' in filename and \
            filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
+
 
 @app.route("/")
 def hello_world():
@@ -28,13 +32,10 @@ def admin():
 
 @app.route("/versicherung")
 def versicherung():
-    return render_template("sichten.html")
+    list = []
+    with open('./storage/Averages.csv', 'r') as file:
+        for line in file:
+            list.append(line)
+    return render_template("sichten.html", title="page", list=list) # jsonfile=json.dumps(data))
 
-@app.route("/show_data")
-def show_data():
-    #with open("./storage/") as file:
-        #list = []
-       # for line in file:
-        #    list.append(line)
-    return render_template("show_data.html")#, list=list)
 
