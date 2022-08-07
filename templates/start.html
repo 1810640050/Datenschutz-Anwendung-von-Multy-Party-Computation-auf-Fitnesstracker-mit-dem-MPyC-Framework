@@ -1,31 +1,29 @@
 {% extends "layouts/main.html" %}
 
 {% block content %}
-    <h1>Header 1</h1>
 <h3>Dateien im Storage:</h3>
 <ul>
     {% for i in items %}
-        <li>{{i}}</li>
+    <li>{{i}}</li>
     {% endfor %}
 </ul>
 
-
-
+<!--
 <h3>CSV Datei hochladen:</h3>
 <p>Platzhalter</p>
 
 <h3>CSV Datei öffnen:</h3>
 <form>
-  <div class="row">
-    <div class="six columns">
-      <label for="exampleEmailInput">Insert Filename</label>
-      <input class="u-full-width" type="email" id="FilenameInput">
+    <div class="row">
+        <div class="six columns">
+            <label for="exampleEmailInput">Insert Filename</label>
+            <input class="u-full-width" type="email" id="FilenameInput">
+        </div>
+        <div class="six columns">
+            <label for="exampleMessage"> </label>
+        </div>
     </div>
-    <div class="six columns">
-        <label for="exampleMessage">     </label>
-    </div>
-  </div>
-  <input class="button-primary" type="submit" onclick="window.location.href = '../show_data';" value="Öffnen" >
-</form>
+    <input class="button-primary" type="submit" onclick="window.location.href = '../show_data';" value="Öffnen">
+</form>-->
 
 {% endblock %}

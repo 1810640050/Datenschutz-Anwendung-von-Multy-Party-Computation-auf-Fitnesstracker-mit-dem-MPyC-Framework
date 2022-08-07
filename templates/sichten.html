@@ -2,55 +2,136 @@
 
 {% block content %}
 
-<head>
+<head xmlns="http://www.w3.org/1999/html">
     <meta charset="UTF-8">
     <title>Sichten Versicherung</title>
 
 </head>
 <body>
+<script src="/static/index.js"></script>
 
 <h1>Übersicht Sichten der Versicherung</h1>
+<div class="row">
+    <div class="four columns">
+        <form method="get">
+            <label for="year">Jahr</label>
+            <input type="text" name="year" value="{{year}}" id="year"/>
+
+            <label for="month">Monat</label>
+            <input type="text" name="month" value="{{month}}" id="month" />
+
+            <br />
+            <input type="submit" value="Anzeigen" />
+        </form>
+    </div>
+
+    <div class="four columns">
+        <table class="u-full-width">
+            <thead>
+                <tr>
+                    <th>{{year}}</th>
+                    <th>{{month}}</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for row in all_months_filter %}
+                <tr>
+                    <td>{{row[0]}}</td>
+                    <td>{{row[1]}}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<h1>Eigene Ansicht</h1>
+
 <form>
-  <div class="row">
-    <div class="six columns">
-      <label for="exampleRecipientInput">Jahr auswählen</label>
-      <select class="u-full-width" id="exampleRecipientInput">
-        <option value="Option 1">2016</option>
-        <option value="Option 2">2017</option>
-        <option value="Option 3">2018</option>
-        <option value="Option 4">2019</option>
-        <option value="Option 5">2020</option>
-        <option value="Option 6">2021</option>
-        <option value="Option 7">Alle Jahre</option>
-      </select>
+    <div class="row">
+        <div class="six columns">
+            <label for="exampleRecipientInput">Jahr auswählen</label>
+            <select class="u-full-width" id="exampleRecipientInput">
+                {% for i in years %}
+                <option value="{{i}}">{{i}}</option>
+                {% endfor %}
+                <option value="Option Alle Jahre">Alle Jahre</option>
+            </select>
+        </div>
+        <div class="six columns">
+            <label for="exampleRecipientInput">Monat auswählen</label>
+            <select class="u-full-width" id="exampleRecipientInput2">
+                {% for i in months %}
+                <option value="Option {{i}}">{{i}}</option>
+                {% endfor %}
+                <option value="Option Alle Monate">Alle Monate</option>
+            </select>
+        </div>
     </div>
-    <div class="six columns">
-      <label for="exampleRecipientInput">Monat auswählen</label>
-      <select class="u-full-width" id="exampleRecipientInput2">
-        <option value="Option 1">Jänner</option>
-        <option value="Option 2">Februar</option>
-        <option value="Option 3">März</option>
-        <option value="Option 4">April</option>
-        <option value="Option 5">Mai</option>
-        <option value="Option 6">Juni</option>
-        <option value="Option 7">Juli</option>
-        <option value="Option 8">August</option>
-        <option value="Option 9">September</option>
-        <option value="Option 10">Oktober</option>
-        <option value="Option 11">November</option>
-        <option value="Option 12">Dezember</option>
-        <option value="Option 13">Alle Monate</option>
-      </select>
-    </div>
-  </div>
-  <input class="button-primary" type="submit" value="Daten anzeigen">
+    <input class="button-primary" type="submit" value="Daten anzeigen">
 </form>
 
-<ul>
-    {% for i in list %}
-        <li>{{i}}</li>
-    {% endfor %}
-</ul>
+
+<div class="row">
+    <div class="four columns">
+        <table class="sortable u-full-width">
+            <thead>
+            <tr>
+                <th>{{head[0]}}</th>
+                <th>{{head[1]}}</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for i in all_months %}
+            <tr>
+                <td>{{i[0]}}</td>
+                <td>{{i[1]}}</td>
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <div class="four columns">
+        <div class="row">
+            <table class="sortable u-full-width">
+                <thead>
+                <tr>
+                    <th>{{head[0]}}</th>
+                    <th>{{head[1]}}</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for i in all_years %}
+                <tr>
+                    <td>{{i[0]}}</td>
+                    <td>{{i[1]}}</td>
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="four columns">
+        <div class="row">
+            <table class="u-full-width">
+                <thead>
+                <tr>
+                    <th>{{head[0]}}</th>
+                    <th>{{head[1]}}</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for i in all_steps_ever %}
+                <tr>
+                    <td>{{i[0]}}</td>
+                    <td>{{i[1]}}</td>
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
 
 </body>
 </html>

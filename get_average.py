@@ -35,14 +35,19 @@ async def main():
         clear_date = comDt.get_Datetime_of_Timestamp(clear_value_of_timestamp).date()
 
         clear_values.append([id, clear_date, int(clear_value_of_steps)])
-    print("\nDurchschnitt aller Monate aller Jahre:")
+
+
+
     filename = "Averages.csv"
-    header = ["Zeitraum", "Steps"]
+    header = defs.HEADER
     if mpc.pid == 0:
         rwcsv.WriteCSV(filename, 'w', header)
+
+    print("\nDurchschnitt aller Monate aller Jahre:")
     months = defs.MONTHS
     years = defs.YEARS
 
+    allyears_allmonths = []
     for i in years:
         for j in months:
             steps = 0
@@ -54,17 +59,19 @@ async def main():
                     steps += k[2]
                     counter += 1
             if counter < 1:
-                print(searchstring, ": No Data awailable")
+                print(searchstring, defs.NODATA)
                 if mpc.pid == 0:
-                    rwcsv.WriteCSV(filename, 'a',[searchstring, "No Data awailable"])
+                    allyears_allmonths.append([searchstring, defs.NODATA])
             else:
                 print(searchstring, ": ", round(steps / counter))
                 if mpc.pid == 0:
-                    rwcsv.WriteCSV(filename, 'a', [searchstring, round(steps / counter)])
-            steps = 0
-            counter = 0
+                    allyears_allmonths.append([searchstring, round(steps / counter)])
+    if mpc.pid == 0:
+        rwcsv.WriteCSV(filename,'a', allyears_allmonths)
+
 
     print("\nDurchschnitt aller Jahre:")
+    all_years = []
     years = defs.YEARS
     for year in years:
         steps = 0
@@ -78,13 +85,16 @@ async def main():
         if counter < 1:
             print(searchstring, ": No Data awailable")
             if mpc.pid == 0:
-                rwcsv.WriteCSV(filename, 'a', [searchstring, "No Data awailable"])
+                all_years.append([searchstring, defs.NODATA])
         else:
             print(searchstring, ": ", round(steps / counter))
             if mpc.pid == 0:
-                rwcsv.WriteCSV(filename, 'a', [searchstring, round(steps / counter)])
+                all_years.append([searchstring, round(steps / counter)])
+    if mpc.pid == 0:
+        rwcsv.WriteCSV(filename, 'a', all_years)
 
     print("\nDurchschnitt gesamt:")
+    all_steps_ever = []
     steps = 0
     divisor = len(clear_values)
     for i in clear_values:
@@ -92,12 +102,14 @@ async def main():
     if divisor < 1:
         print(searchstring, ": No Data awailable")
         if mpc.pid == 0:
-            rwcsv.WriteCSV(filename, 'a', [searchstring, "No Data awailable"])
+            all_steps_ever.append([searchstring, defs.NODATA])
     else:
         print(searchstring, ": ", round(steps / divisor))
         if mpc.pid == 0:
-            rwcsv.WriteCSV(filename, 'a', ["Gesamt", round(steps / divisor)])
+            all_steps_ever.append(["Gesamt", round(steps / divisor)])
     print("Average steps all Time: ", round(steps / divisor))
+    if mpc.pid == 0:
+        rwcsv.WriteCSV(filename, 'a', all_steps_ever)
 
     await mpc.shutdown()
 mpc.run(main())

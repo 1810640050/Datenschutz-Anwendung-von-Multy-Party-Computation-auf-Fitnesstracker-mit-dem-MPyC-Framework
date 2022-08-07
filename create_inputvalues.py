@@ -48,7 +48,6 @@ def run():
         list = [id, date, steps]
         rwcsv.WriteCSV(name, 'a', list)
 
-
 run()
 
 
