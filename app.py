@@ -1,13 +1,9 @@
 import csv
-import json
 
-from flask import Flask, request, render_template, session, redirect, url_for, send_from_directory
-from werkzeug.utils import secure_filename
-from datetime import datetime
-import pandas as pd
+from flask import Flask, request, render_template
 import os
 
-import definitions
+from python_files import definitions
 
 app = Flask(__name__)
 
@@ -30,30 +26,38 @@ def admin():
 
 @app.route("/versicherung")
 def versicherung():
-    list = []
-    with open('./storage/Averages.csv', 'r') as file:
-        data = csv.reader(file, delimiter=',')
-        for line in data:
-            list.append(line)
-    head = list[0]
+    try:
+        list = []
+        with open('./storage/Averages.csv', 'r') as file:
+            data = csv.reader(file, delimiter=',')
+            for line in data:
+                list.append(line)
+        head = list[0]
 
-    # listenelemente sind strings und keine listen!!
-    all_months = get_list_of_stringlist(list[1])
-    all_years = get_list_of_stringlist(list[2])
-    all_steps_ever = get_list_of_stringlist(list[3])
-
-    year = request.args.get("year", "choose year")
-    month = request.args.get("month", "choose month")
-
-    all_months_filter = []
-
-    for i in all_months:
-        if str(i[0]).startswith(str(year)+"-"+str(month)):
-            all_months_filter.append(i)
+        # listenelemente sind strings und keine listen!!
+        all_months = get_list_of_stringlist(list[1])
+        all_years = get_list_of_stringlist(list[2])
+        all_steps_ever = get_list_of_stringlist(list[3])
 
 
-    return render_template("sichten.html", all_months_filter=all_months_filter, month=month, year=year, title="page", years=definitions.YEARS, months=definitions.MONTHS ,head=head, all_months=all_months,
-                           all_years=all_years, all_steps_ever=all_steps_ever, list=list)
+        year = request.args.get("year", "choose year")
+        month = request.args.get("month", "choose month")
+
+        all_months_filter = []
+
+        for i in all_months:
+            if str(i[0]).startswith(str(year)+"-"+str(month)):
+                all_months_filter.append(i)
+
+        return render_template("sichten.html", all_months_filter=all_months_filter, month=month, year=year,
+                               title="page", years=definitions.YEARS, months=definitions.MONTHS, head=head,
+                               all_months=all_months,
+                               all_years=all_years, all_steps_ever=all_steps_ever, list=list)
+    except:
+        error = "NO FILE AVERAGES.CSV"
+        return render_template("error.html", error= error)
+
+
 
 # string in liste umwandeln
 def get_list_of_stringlist(list):
@@ -62,3 +66,6 @@ def get_list_of_stringlist(list):
     for i in list:
         returnlist.append(ast.literal_eval(i))
     return returnlist
+
+if __name__ == '__main__':
+    app.run(debug=True)

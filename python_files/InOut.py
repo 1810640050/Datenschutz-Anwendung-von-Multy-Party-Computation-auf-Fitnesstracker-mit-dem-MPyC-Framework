@@ -4,8 +4,7 @@ import json
 from datetime import date, time, datetime
 
 def _get_Path(filename):
-	path = "storage/"
-	PATH = path + filename
+	PATH = "storage/"+filename
 	return PATH
 
 class ComputeDates():
@@ -38,7 +37,7 @@ class ReadWriteJson():
 		pass
 
 	def create_Json_File(filename, filemode, *args):
-		path_to_file = _get_Path(filename)
+		path_to_file = "storage/"+filename  #_get_Path(filename)
 		for i in args: # schleife notwendig, sonst wird eine liste statt dictionary gespeichert
 			json_object = json.dumps(i, indent=4)
 			with open(path_to_file, filemode) as file:
