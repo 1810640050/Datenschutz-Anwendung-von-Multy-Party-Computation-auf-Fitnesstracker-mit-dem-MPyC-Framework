@@ -9,31 +9,18 @@
 <body>
 <h1>Administration der Daten</h1>
 
-<div class="row">
-    <div class="six column"><input type="button" value="Create Inputvalues"></div>
-    <div class="six columns"></div>
-</div>
-
-<div class="row">
-    <div class="six column"><input type="button" value="Create Shares"></div>
-    <div class="six columns"></div>
-</div>
-
-<div class="row">
-    <div class="six column"><input type="button" value="Get Averages"></div>
-    <div class="six columns"></div>
-</div>
-
-<div class="row">
-    <div class="six column"><input type="button" value="Restore Shares"></div>
-    <div class="six column"></div>
-</div>
-
-<div class="row">
-    <div class="six column"><input type="button" value="Delete Clear Files"></div>
-    <div class="six column"></div>
-</div>
-
+    <div class="row">
+        <form method="get">
+            <label for="Choose_Function">Aktion auswählen</label>
+            <select name="Choose_Function" id="Choose_Function">
+                {% for func in functions %}
+                <option id="option_function" name="option_function" value={{func}}>{{func}}</option>
+                {% endfor %}
+            </select>
+            <input type="submit" value="Ausführen"/>
+        </form>
+    </div>
+<p>{{returnlist[0]}}</p>
 </body>
 </html>
 

@@ -1,65 +1,55 @@
-import csv
-
+from python_files.InOut import ReadWriteCSV as rwcsv
+import python_files.definitions as defs
 from flask import Flask, request, render_template
 import os
 
-from python_files import definitions
-
 app = Flask(__name__)
 
-
+FILTERED_LIST = []
 @app.route("/")
 def hello_world():
     items = []
-    path = "./storage"
+    path = defs.PATH_FOR_SHARES
     files = os.listdir(path)
+    if len(files) == defs.PARTIES:
+        complete = "All files complete! " + str(defs.PARTIES) + " Parties defined and " + str(len(files)) + " Shares available"
+    else:
+        complete = "ERROR, some files are missing! " + str(len(files)) + " Shares and " + str(defs.PARTIES) + " Parties were defined!"
     for i in files:
-        items.append(i)
+        items.append([i, path])
     items.sort()
-    return render_template("start.html", items=items)
+    return render_template("start.html", items=items, complete=complete)
 
 
 @app.route("/admin")
 def admin():
-    return render_template("admin.html")
+    function = request.args.get("Choose_Function", defs.FUNCTIONS[0])
+    returnlist = []
+    if function == defs.FUNCTIONS[1]:
+        returnlist = [defs.FUNCTIONS[1]]
+    elif function == defs.FUNCTIONS[2]:
+        returnlist = [defs.FUNCTIONS[2]]
+    elif function == defs.FUNCTIONS[3]:
+        returnlist = [defs.FUNCTIONS[3]]
+
+    return render_template("admin.html",function=function, functions=defs.FUNCTIONS, returnlist=returnlist)
 
 
 @app.route("/versicherung")
 def versicherung():
-    try:
-        list = []
-        with open('./storage/Averages.csv', 'r') as file:
-            data = csv.reader(file, delimiter=',')
-            for line in data:
-                list.append(line)
-        head = list[0]
-
-        # listenelemente sind strings und keine listen!!
-        all_months = get_list_of_stringlist(list[1])
-        all_years = get_list_of_stringlist(list[2])
-        all_steps_ever = get_list_of_stringlist(list[3])
+    average_file = defs.AVERAGE_FILE
+    year = request.args.get("year", "---")
+    month = request.args.get("month", "---")
+    searchstring = " " + str(year) + " " + str(month)
+    os.system(defs.RUN_AVERAGE_SCRIPT + searchstring)
+    list = rwcsv.get_CSV_as_List(defs.PATH_FOR_TEMP_FILES + average_file)
+    file_path = defs.PATH_FOR_TEMP_FILES + average_file
+    if os.path.isfile(file_path):
+        os.remove(file_path)
+    return render_template("sichten.html",special_month=defs.MONTHS_SPECIALS, special_year=defs.YEARS_SPECIALS, zeitraum=defs.ZEITRAUM, schritte=defs.SCHRITTE, month=month, year=year, years=defs.YEARS, months=defs.MONTHS, list=list)
 
 
-        year = request.args.get("year", "choose year")
-        month = request.args.get("month", "choose month")
-
-        all_months_filter = []
-
-        for i in all_months:
-            if str(i[0]).startswith(str(year)+"-"+str(month)):
-                all_months_filter.append(i)
-
-        return render_template("sichten.html", all_months_filter=all_months_filter, month=month, year=year,
-                               title="page", years=definitions.YEARS, months=definitions.MONTHS, head=head,
-                               all_months=all_months,
-                               all_years=all_years, all_steps_ever=all_steps_ever, list=list)
-    except:
-        error = "NO FILE AVERAGES.CSV"
-        return render_template("error.html", error= error)
-
-
-
-# string in liste umwandeln
+# # string in liste umwandeln
 def get_list_of_stringlist(list):
     import ast
     returnlist = []

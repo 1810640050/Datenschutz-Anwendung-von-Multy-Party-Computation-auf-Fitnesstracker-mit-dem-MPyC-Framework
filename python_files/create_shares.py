@@ -1,6 +1,7 @@
 import base64
 import json
 import pickle
+import definitions as defs
 
 from InOut import ReadWriteCSV as rwcsv
 from mpyc.runtime import mpc
@@ -32,10 +33,11 @@ async def main():
 
 
     # define name for files with shares -> share_x.csv
-    name = "share_" + str(mpc.pid) + ".csv"
+    path = defs.PATH_FOR_SHARES
+    name = path + "share_" + str(mpc.pid) + ".csv"
 
     # get input from csv file
-    csv_values = rwcsv.get_CSV_as_List("daily_steps.csv")
+    csv_values = rwcsv.get_CSV_as_List(defs.PATH_FOR_INPUTFILES + "daily_steps.csv")
     header_line = csv_values.pop(0)
     rwcsv.WriteCSV(name, 'w', header_line)
     sec_values = []

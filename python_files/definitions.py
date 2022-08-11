@@ -1,4 +1,16 @@
 MONTHS = ["01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"]
 YEARS = ["2016", "2017", "2018", "2019", "2020", "2021", "2022"]
+YEARS_SPECIALS = ["All Data all time"]
+MONTHS_SPECIALS = ["All Months of chosen year", "All Data of chosen year"]
 NODATA = "No Data available!"
-HEADER = ["Zeitraum", "Schritte"]
+HEADER = ["Id", "Zeitraum", "Schritte"]
+PARTIES = 3
+PATH_FOR_SHARES = "storage/"
+PATH_FOR_INPUTFILES = "inputfiles/"
+PATH_FOR_TEMP_FILES = "tmp/"
+PATH_FOR_PYTHON_FILES = "python_files/"
+ZEITRAUM = "Zeitraum"
+SCHRITTE = "Schritte"
+AVERAGE_FILE = "average.csv"
+FUNCTIONS = ["---", "Create_Inputvalues", "Create_Shares", "Delete_Shares"]
+RUN_AVERAGE_SCRIPT = "python " + str(PATH_FOR_PYTHON_FILES) + "get_average.py -M" + str(PARTIES)

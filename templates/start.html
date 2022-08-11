@@ -2,28 +2,24 @@
 
 {% block content %}
 <h3>Dateien im Storage:</h3>
-<ul>
-    {% for i in items %}
-    <li>{{i}}</li>
-    {% endfor %}
-</ul>
+<h4>{{complete}}</h4>
 
-<!--
-<h3>CSV Datei hochladen:</h3>
-<p>Platzhalter</p>
-
-<h3>CSV Datei öffnen:</h3>
-<form>
-    <div class="row">
-        <div class="six columns">
-            <label for="exampleEmailInput">Insert Filename</label>
-            <input class="u-full-width" type="email" id="FilenameInput">
-        </div>
-        <div class="six columns">
-            <label for="exampleMessage"> </label>
-        </div>
-    </div>
-    <input class="button-primary" type="submit" onclick="window.location.href = '../show_data';" value="Öffnen">
-</form>-->
-
+<div class="four columns">
+    <table class="u-full-width">
+        <thead>
+        <tr>
+            <th>Datei</th>
+            <th>Speicherort</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for item in items %}
+        <tr>
+            <td>{{item[0]}}</td>
+            <td>{{item[1]}}</td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
 {% endblock %}

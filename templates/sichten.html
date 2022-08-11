@@ -9,129 +9,56 @@
 </head>
 <body>
 
-<h1>Übersicht Sichten der Versicherung</h1>
-<div class="row">
-    <div class="four columns">
-        <form method="get">
-            <label for="year">Jahr</label>
-            <input type="text" name="year" value="{{year}}" id="year"/>
-
-            <label for="month">Monat</label>
-            <input type="text" name="month" value="{{month}}" id="month" />
-
-            <br />
-            <input type="submit" value="Anzeigen" />
-        </form>
-    </div>
-
-    <div class="four columns">
-        <table class="u-full-width">
-            <thead>
-                <tr>
-                    <th>{{year}}</th>
-                    <th>{{month}}</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for row in all_months_filter %}
-                <tr>
-                    <td>{{row[0]}}</td>
-                    <td>{{row[1]}}</td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-    </div>
-</div>
-
-<h1>Eigene Ansicht</h1>
-
-<form>
+    <h1>Übersicht Sichten der Versicherung</h1>
     <div class="row">
-        <div class="six columns">
-            <label for="exampleRecipientInput">Jahr auswählen</label>
-            <select class="u-full-width" id="exampleRecipientInput">
-                {% for i in years %}
-                <option value="{{i}}">{{i}}</option>
-                {% endfor %}
-                <option value="Option Alle Jahre">Alle Jahre</option>
-            </select>
-        </div>
-        <div class="six columns">
-            <label for="exampleRecipientInput">Monat auswählen</label>
-            <select class="u-full-width" id="exampleRecipientInput2">
-                {% for i in months %}
-                <option value="Option {{i}}">{{i}}</option>
-                {% endfor %}
-                <option value="Option Alle Monate">Alle Monate</option>
-            </select>
-        </div>
-    </div>
-    <input class="button-primary" type="submit" value="Daten anzeigen">
-</form>
+        <div class="four columns">
+            <form method="get">
+                <label for="year">Jahr</label>
+                <select name="year" id="year" value={{year}}>
+                    <option>---</option>
+                    {% for opt in years %}
+                    <option id="option_year" name="option_year" value={{opt}}>{{opt}}</option>
+                    {% endfor %}
+                    {% for opt in special_year %}
+                    <option id="option_year_spec" name="option_year" value={{opt}}>{{opt}}</option>
+                    {% endfor %}
+                </select>
 
+                <label for="month">Monat</label>
+                <select name="month" id="month" value={{month}}>
+                    <option>---</option>
+                    {% for opt in months %}
+                    <option id="option_month" name="option_month" value={{opt}}>{{opt}}</option>
+                    {% endfor %}
+                    {% for opt in special_month %}
+                    <option id="option_month_spec" name="option_year" value={{opt}}>{{opt}}</option>
+                    {% endfor %}
+                </select>
 
-<div class="row">
-    <div class="four columns">
-        <table class="sortable u-full-width">
-            <thead>
-            <tr>
-                <th>{{head[0]}}</th>
-                <th>{{head[1]}}</th>
-            </tr>
-            </thead>
-            <tbody>
-            {% for i in all_months %}
-            <tr>
-                <td>{{i[0]}}</td>
-                <td>{{i[1]}}</td>
-            </tr>
-            {% endfor %}
-            </tbody>
-        </table>
-    </div>
-    <div class="four columns">
-        <div class="row">
-            <table class="sortable u-full-width">
-                <thead>
-                <tr>
-                    <th>{{head[0]}}</th>
-                    <th>{{head[1]}}</th>
-                </tr>
-                </thead>
-                <tbody>
-                {% for i in all_years %}
-                <tr>
-                    <td>{{i[0]}}</td>
-                    <td>{{i[1]}}</td>
-                </tr>
-                {% endfor %}
-                </tbody>
-            </table>
+                <br />
+                <input type="submit" value="Anzeigen" />
+            </form>
         </div>
-    </div>
-    <div class="four columns">
-        <div class="row">
+
+        <div class="four columns">
             <table class="u-full-width">
                 <thead>
-                <tr>
-                    <th>{{head[0]}}</th>
-                    <th>{{head[1]}}</th>
-                </tr>
+                    <tr>
+                        <th>{{zeitraum}}</th>
+                        <th>{{schritte}}</th>
+                    </tr>
                 </thead>
                 <tbody>
-                {% for i in all_steps_ever %}
-                <tr>
-                    <td>{{i[0]}}</td>
-                    <td>{{i[1]}}</td>
-                </tr>
-                {% endfor %}
+                    {% for item in list %}
+                    <tr>
+                        <td>{{item[1]}}</td>
+                        <td>{{item[2]}}</td>
+                    </tr>
+                    {% endfor %}
                 </tbody>
             </table>
         </div>
     </div>
-</div>
-
 </body>
 </html>
 

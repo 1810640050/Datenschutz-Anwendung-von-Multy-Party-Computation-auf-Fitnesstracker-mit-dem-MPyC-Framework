@@ -3,6 +3,7 @@ from InOut import ReadWriteJson as rwj
 from InOut import ReadWriteCSV as rwcsv
 from datetime import date, time, datetime
 import csv, json
+import definitions as defs
 
 
 def _get_Timestamp_of_String(timestring):
@@ -13,7 +14,8 @@ def _get_Datetime_of_Timestamp(stamp):
     return datetime.fromtimestamp(stamp)
 
 def run():
-    daily_steps = rwcsv.get_CSV_as_List("dailySteps_merged.csv")
+    name = defs.PATH_FOR_INPUTFILES + "dailySteps_merged.csv"
+    daily_steps = rwcsv.get_CSV_as_List(name)
     daily_steps_csv = daily_steps
 
     # # create json file
@@ -36,8 +38,9 @@ def run():
 
 
     # create csv file
-    name = "daily_steps.csv"
-    header_line = daily_steps_csv.pop(0)
+    #name = "daily_steps.csv"
+    daily_steps_csv.pop(0)
+    header_line = defs.HEADER
 
     rwcsv.WriteCSV(name, 'w', header_line)
 
