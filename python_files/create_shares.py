@@ -37,7 +37,7 @@ async def main():
     name = path + "share_" + str(mpc.pid) + ".csv"
 
     # get input from csv file
-    csv_values = rwcsv.get_CSV_as_List(defs.PATH_FOR_INPUTFILES + "daily_steps.csv")
+    csv_values = rwcsv.get_CSV_as_List(defs.PATH_FOR_INPUTFILES + "dailySteps_merged.csv")
     header_line = csv_values.pop(0)
     rwcsv.WriteCSV(name, 'w', header_line)
     sec_values = []

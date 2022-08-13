@@ -1,13 +1,41 @@
 {% extends "layouts/main.html" %}
 
 {% block content %}
-
-<head>
-    <meta charset="UTF-8">
-    <title>Admin Site</title>
-</head>
 <body>
-<h1>Administration der Daten</h1>
+<div class="row">
+    <h2>Upload new File</h2>
+    <form method=post enctype=multipart/form-data>
+        <input type=file name=file>
+        <input type=submit value=Upload>
+    </form>
+</div>
+
+
+<div class="row">
+    <h2>Dateien Inputfiles</h2>
+    <div class="four columns">
+        <table class="u-full-width">
+            <thead>
+            <tr>
+                <th>Datei</th>
+                <th>Speicherort</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for item in items %}
+            <tr>
+                <td>{{item[0]}}</td>
+                <td>{{item[1]}}</td>
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+<div class="row">
+    <h2>Administration der Daten</h2>
 
     <div class="row">
         <form method="get">
@@ -20,7 +48,9 @@
             <input type="submit" value="Ausführen"/>
         </form>
     </div>
-<p>{{returnlist[0]}}</p>
+    <p>{{returnlist[0]}}</p>
+</div>
+
 </body>
 </html>
 

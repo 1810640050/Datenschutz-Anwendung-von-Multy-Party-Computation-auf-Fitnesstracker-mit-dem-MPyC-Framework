@@ -12,5 +12,11 @@ PATH_FOR_PYTHON_FILES = "python_files/"
 ZEITRAUM = "Zeitraum"
 SCHRITTE = "Schritte"
 AVERAGE_FILE = "average.csv"
-FUNCTIONS = ["---", "Create_Inputvalues", "Create_Shares", "Delete_Shares"]
-RUN_AVERAGE_SCRIPT = "python " + str(PATH_FOR_PYTHON_FILES) + "get_average.py -M" + str(PARTIES)
+FUNCTIONS = ["---", "Create_Inputvalues", "Delete_Inputvalues", "Create_Shares", "Delete_Shares"]
+RUN_AVERAGE_SCRIPT = "python " + PATH_FOR_PYTHON_FILES + "get_average.py -M" + str(PARTIES)
+RUN_CREATE_INPUTVALUES = "python " + PATH_FOR_PYTHON_FILES + "create_inputvalues.py"
+RUN_CREATE_SHARES = "python " + PATH_FOR_PYTHON_FILES + "create_shares.py -M" + str(PARTIES)
+UPLOAD_FOLDER = "inputfiles/"
+ALLOWED_EXTENSIONS = {'csv'}
+
+
