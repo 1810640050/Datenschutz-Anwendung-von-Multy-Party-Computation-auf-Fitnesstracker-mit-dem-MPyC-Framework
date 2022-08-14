@@ -85,6 +85,7 @@ def admin():
 
 @app.route("/versicherung", methods=['GET'])
 def versicherung():
+    # aufpandas ändern!!!
     average_file = defs.AVERAGE_FILE
     year = request.args.get("year", "---")
     month = request.args.get("month", "---")
@@ -99,7 +100,13 @@ def versicherung():
         file_path = defs.PATH_FOR_TEMP_FILES + average_file
         if os.path.isfile(file_path):
             os.remove(file_path)
-        return render_template("sichten.html",special_month=defs.MONTHS_SPECIALS, special_year=defs.YEARS_SPECIALS, zeitraum=defs.ZEITRAUM, schritte=defs.SCHRITTE, month=month, year=year, years=defs.YEARS, months=defs.MONTHS, list=list)
+        if str(month) == defs.MONTHS_SPECIALS[0]:
+            # TODO Liste bearbeiten!!
+            return render_template("sichten2.html", special_month=defs.MONTHS_SPECIALS, special_year=defs.YEARS_SPECIALS,
+                                   zeitraum=defs.ZEITRAUM, schritte=defs.SCHRITTE, month=month, year=year,
+                                   years=defs.YEARS, months=defs.MONTHS, list=list)
+        else:
+            return render_template("sichten.html",special_month=defs.MONTHS_SPECIALS, special_year=defs.YEARS_SPECIALS, zeitraum=defs.ZEITRAUM, schritte=defs.SCHRITTE, month=month, year=year, years=defs.YEARS, months=defs.MONTHS, list=list)
 
 
 # # string in liste umwandeln

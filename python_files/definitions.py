@@ -1,7 +1,7 @@
 MONTHS = ["01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"]
 YEARS = ["2016", "2017", "2018", "2019", "2020", "2021", "2022"]
-YEARS_SPECIALS = ["All Data all time"]
-MONTHS_SPECIALS = ["All Months of chosen year", "All Data of chosen year"]
+YEARS_SPECIALS = ["All_Data_all_time"]
+MONTHS_SPECIALS = ["All_Months_of_chosen_year", "All_Data_of_chosen_year"]
 NODATA = "No Data available!"
 HEADER = ["Id", "Zeitraum", "Schritte"]
 PARTIES = 3
