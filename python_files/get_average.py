@@ -33,9 +33,8 @@ async def main():
 
 
         if str(month) == defs.MONTHS_SPECIALS[0]: # All Month each of chosen Year
-            idlist = []
-            stringlist = []
-            steplist = []
+            if mpc.pid == 0:
+                rwcsv.WriteCSV(defs.PATH_FOR_TEMP_FILES + defs.AVERAGE_FILE, 'w')
             for month in defs.MONTHS:
                 searchstring = str(year) + "-" + str(month)
 
@@ -65,16 +64,13 @@ async def main():
                 divisor = len(clear_values)
                 if divisor < 1:
                     average_steps = "No Data"
+                    appendlist = [id, searchstring, average_steps]
                 else:
                     average_steps = round(summe / divisor)
-                    print("Searchstring: ", searchstring, " Steps: ", average_steps)
                     appendlist = [id, searchstring, average_steps]
-                    resultlist.append(appendlist)
-               #     idlist.append(id)
-              #      stringlist.append(searchstring)
-             #       steplist.append(average_steps)
-            #resultlist=[idlist, stringlist, steplist]
-            #print("resultlist: ", resultlist)
+                if mpc.pid == 0:
+                    rwcsv.WriteCSV(defs.PATH_FOR_TEMP_FILES + defs.AVERAGE_FILE, 'a', appendlist)
+
         else:
             if str(year) == defs.YEARS_SPECIALS[0]: # all data all time
                 searchstring = ""
@@ -109,6 +105,7 @@ async def main():
             divisor = len(clear_values)
             if divisor < 1:
                 average_steps = "No Data"
+                resultlist = [id, searchstring, average_steps]
             else:
                 if str(year) == defs.YEARS_SPECIALS[0]: # all data all time
                     searchstring = "all Data all Time"
@@ -116,9 +113,8 @@ async def main():
                 resultlist = [id, searchstring, average_steps]
                 print("Resultlist: ", resultlist)
 
-        print()
-        if mpc.pid == 0:
-            rwcsv.WriteCSV(defs.PATH_FOR_TEMP_FILES + defs.AVERAGE_FILE, 'w', resultlist)
+            if mpc.pid == 0:
+                rwcsv.WriteCSV(defs.PATH_FOR_TEMP_FILES + defs.AVERAGE_FILE, 'w', resultlist)
         await mpc.shutdown()
 
 
