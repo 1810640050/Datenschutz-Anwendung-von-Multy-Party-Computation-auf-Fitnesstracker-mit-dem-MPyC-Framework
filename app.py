@@ -53,7 +53,7 @@ def admin():
             return redirect(url_for('admin', name=filename))
 
 
-
+    # FUNCTIONS = ["---", "Create_Inputvalues_with_Date", "Delete_Inputvalues", "Create_Shares_with_Date", "Delete_Shares"]
     function = request.args.get("Choose_Function", defs.FUNCTIONS[0])
     returnlist = []
     if function == defs.FUNCTIONS[1]:
@@ -78,7 +78,15 @@ def admin():
         os.system(defs.RUN_CREATE_SHARES)
         returnlist = ["3." + defs.FUNCTIONS[3]]
     elif function == defs.FUNCTIONS[4]:
+        path = defs.PATH_FOR_SHARES
+        files = os.listdir(path)
+        for file in files:
+            file_path = path + str(file)
+            if os.path.isfile(file_path):
+                os.remove(file_path)
         returnlist = ["4." + defs.FUNCTIONS[4]]
+        return redirect(url_for('admin'))
+
 
     return render_template("admin.html",items=items, function=function, functions=defs.FUNCTIONS, returnlist=returnlist)
 
@@ -95,6 +103,7 @@ def versicherung():
         return render_template("sichten.html",special_month=defs.MONTHS_SPECIALS, special_year=defs.YEARS_SPECIALS, zeitraum=defs.ZEITRAUM, schritte=defs.SCHRITTE, month=month, year=year, years=defs.YEARS, months=defs.MONTHS)
 
     elif len(request.args) > 0: # nur mit Suchparameter wird mpc gestartet
+        print("Searchstring: ", searchstring)
         os.system(defs.RUN_AVERAGE_SCRIPT + searchstring)
         list = rwcsv.get_CSV_as_List(defs.PATH_FOR_TEMP_FILES + average_file)
         file_path = defs.PATH_FOR_TEMP_FILES + average_file

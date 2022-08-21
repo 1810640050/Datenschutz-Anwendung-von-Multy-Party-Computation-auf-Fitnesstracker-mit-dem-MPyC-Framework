@@ -23,7 +23,7 @@ async def main():
         searchstring = None
 
         # define name of file
-        name = defs.PATH_FOR_SHARES + "share_" + str(mpc.pid) + ".csv"
+        name = "../" + defs.PATH_FOR_SHARES + "share_" + str(mpc.pid) + ".csv"
 
         # read csv file and store clear values in list
         sec_values = rwcsv.get_CSV_as_List(name)
@@ -37,23 +37,23 @@ async def main():
             if mpc.pid == 0:
                 rwcsv.WriteCSV(defs.PATH_FOR_TEMP_FILES + defs.AVERAGE_FILE, 'w')
             for month in defs.MONTHS:
-                searchstring = str(year) + "-" + str(month)
+                searchstring = str(year) + ":" + str(month)
 
                 for line in sec_values:
                     id = int(line[0])
-                    sec_date = json.loads(line[1])
+                    clear_date = json.loads(line[1])
                     #sec_steps = json.loads(line[2])
 
                     # restore to field
-                    field_of_date = pickle.loads(base64.decodebytes(sec_date.encode('utf-8')))
+                    #field_of_date = pickle.loads(base64.decodebytes(sec_date.encode('utf-8')))
                     #field_of_steps = pickle.loads(base64.decodebytes(sec_steps.encode('utf-8')))
 
                     # compute values
-                    clear_value_of_timestamp = await mpc.output(field_of_date)
+                    #clear_value_of_timestamp = await mpc.output(field_of_date)
                     #clear_value_of_steps = await mpc.output(field_of_steps)
 
                     # get date from timestamp
-                    clear_date = comDt.get_Datetime_of_Timestamp(clear_value_of_timestamp).date()
+                    #clear_date = comDt.get_Datetime_of_Timestamp(clear_value_of_timestamp).date()
 
                     # if date fits searchstring -> store in list
                     if str(clear_date).startswith(searchstring):
@@ -74,7 +74,7 @@ async def main():
                     average_steps = round(erg / divisor)
                     appendlist = [id, searchstring, average_steps]
                 if mpc.pid == 0:
-                    rwcsv.WriteCSV(defs.PATH_FOR_TEMP_FILES + defs.AVERAGE_FILE, 'a', appendlist)
+                    rwcsv.WriteCSV("../" + defs.PATH_FOR_TEMP_FILES + defs.AVERAGE_FILE, 'a', appendlist)
 
         else:
             if str(year) == defs.YEARS_SPECIALS[0]: # all data all time
@@ -82,25 +82,27 @@ async def main():
             elif str(month) == defs.MONTHS_SPECIALS[1]: # All Data of chosen year
                 searchstring = str(year)
             else: # regular requests => year and month
-                searchstring = str(year) + "-" + str(month)
+                searchstring = str(year) + ":" + str(month)
 
             for line in sec_values:
                 id = int(line[0])
-                sec_date = json.loads(line[1])
+                clear_date = json.loads(line[1])
+                #print()
                 #sec_steps = json.loads(line[2])
 
                 # restore to field
-                field_of_date = pickle.loads(base64.decodebytes(sec_date.encode('utf-8')))
+                #field_of_date = pickle.loads(base64.decodebytes(sec_date.encode('utf-8')))
                 #field_of_steps = pickle.loads(base64.decodebytes(sec_steps.encode('utf-8')))
 
                 # compute values
-                clear_value_of_timestamp = await mpc.output(field_of_date)
+                #clear_value_of_timestamp = await mpc.output(field_of_date)
                 #clear_value_of_steps = await mpc.output(field_of_steps)
 
                 # get date from timestamp
-                clear_date = comDt.get_Datetime_of_Timestamp(clear_value_of_timestamp).date()
+                #clear_date = comDt.get_Datetime_of_Timestamp(clear_value_of_timestamp).date()
 
                 # if date fits searchstring -> store in list
+                #print(clear_date, " ", searchstring)
                 if str(clear_date).startswith(searchstring):
                     sec_steps = json.loads(line[2])
                     field_of_steps = pickle.loads(base64.decodebytes(sec_steps.encode('utf-8')))
@@ -122,7 +124,7 @@ async def main():
                 print("Resultlist: ", resultlist)
 
             if mpc.pid == 0:
-                rwcsv.WriteCSV(defs.PATH_FOR_TEMP_FILES + defs.AVERAGE_FILE, 'w', resultlist)
+                rwcsv.WriteCSV("../" + defs.PATH_FOR_TEMP_FILES + defs.AVERAGE_FILE, 'w', resultlist)
         await mpc.shutdown()
 
 
