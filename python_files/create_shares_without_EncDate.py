@@ -36,7 +36,7 @@ async def main():
         # convert to string
         #string_of_datefield = base64.encodebytes(pickle.dumps(field_of_date)).decode()
         string_of_stepsfield = base64.encodebytes(pickle.dumps(field_of_steps)).decode()
-
+        print()
         # store values to list and store to csv
         json_id = json.dumps(id)
         json_date = json.dumps(date) #(string_of_datefield)

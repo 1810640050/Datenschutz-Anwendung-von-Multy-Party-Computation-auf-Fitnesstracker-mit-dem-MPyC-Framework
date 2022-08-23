@@ -18,8 +18,6 @@ RUN_CREATE_INPUTVALUES = "python " + PATH_FOR_PYTHON_FILES + "create_inputvalues
 RUN_CREATE_SHARES = "python " + PATH_FOR_PYTHON_FILES + "create_shares.py -M" + str(PARTIES)
 UPLOAD_FOLDER = "inputfiles/"
 ALLOWED_EXTENSIONS = {'csv'}
-WEBHOOK_PATHS = ["https://webhook.site/ef5d85a8-69b3-4a5c-a027-85446c1a622c", "https://webhook.site/e3f3baef-40f2-4a0f-b32d-5542bd504c51", "https://webhook.site/2a7a69de-7670-458d-bff3-8e5b6b13abfb"]
-
-
-
-
+PATH_FOR_GPS_INPUTFILES = "gps_inputfiles/"
+NAME_OF_GPS_INPUTFILE = "track_points.csv"
+PATH_FOR_GPS_SHARES = "gps_storage/"
