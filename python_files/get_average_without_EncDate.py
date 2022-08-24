@@ -23,7 +23,7 @@ async def main():
         searchstring = None
 
         # define name of file
-        name = "../" + defs.PATH_FOR_SHARES + "share_" + str(mpc.pid) + ".csv"
+        name = "../" + defs.PATH_FOR_SHARES_NOSECDATE + "share_" + str(mpc.pid) + ".csv"
 
         # read csv file and store clear values in list
         sec_values = rwcsv.get_CSV_as_List(name)

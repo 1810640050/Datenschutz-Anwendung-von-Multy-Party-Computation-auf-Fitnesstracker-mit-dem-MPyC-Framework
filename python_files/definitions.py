@@ -18,6 +18,12 @@ RUN_CREATE_INPUTVALUES = "python " + PATH_FOR_PYTHON_FILES + "create_inputvalues
 RUN_CREATE_SHARES = "python " + PATH_FOR_PYTHON_FILES + "create_shares.py -M" + str(PARTIES)
 UPLOAD_FOLDER = "inputfiles/"
 ALLOWED_EXTENSIONS = {'csv'}
-PATH_FOR_GPS_INPUTFILES = "gps_inputfiles/"
+PATH_FOR_GPS_INPUTFILES = "inputfiles_gps/"
 NAME_OF_GPS_INPUTFILE = "track_points.csv"
-PATH_FOR_GPS_SHARES = "gps_storage/"
+PATH_FOR_GPS_SHARES = "storage_gps/"
+
+
+PATH_FOR_SHARES_NOSECDATE = "storage_noSecDate/"
+
+
+PATH_FOR_INPUTFILES_NOSECDATE = "inputfiles_noSecDate/"

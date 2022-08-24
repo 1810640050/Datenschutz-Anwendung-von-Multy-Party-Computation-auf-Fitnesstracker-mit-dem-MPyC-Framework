@@ -12,11 +12,11 @@ async def main():
     await mpc.start()
 
     # define name for files with shares -> share_x.csv
-    path = "../" + defs.PATH_FOR_SHARES
+    path = "../" + defs.PATH_FOR_SHARES_NOSECDATE
     name = path + "share_" + str(mpc.pid) + ".csv"
 
     # get input from csv file
-    csv_values = rwcsv.get_CSV_as_List("../" + defs.PATH_FOR_INPUTFILES + "dailySteps_merged.csv")
+    csv_values = rwcsv.get_CSV_as_List("../" + defs.PATH_FOR_INPUTFILES_NOSECDATE + "dailySteps_merged.csv")
     header_line = csv_values.pop(0)
     rwcsv.WriteCSV(name, 'w', header_line)
     sec_values = []
@@ -36,7 +36,7 @@ async def main():
         # convert to string
         #string_of_datefield = base64.encodebytes(pickle.dumps(field_of_date)).decode()
         string_of_stepsfield = base64.encodebytes(pickle.dumps(field_of_steps)).decode()
-        print()
+
         # store values to list and store to csv
         json_id = json.dumps(id)
         json_date = json.dumps(date) #(string_of_datefield)
