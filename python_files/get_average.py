@@ -1,4 +1,4 @@
-from InOut import ReadWriteJson as rwj, ReadWriteCSV as rwcsv
+from InOut import ReadWriteCSV as rwcsv
 from InOut import ComputeDates as comDt
 import base64
 import pickle
@@ -12,10 +12,11 @@ args = sys.argv
 secint = mpc.SecInt()
 
 async def main():
+    await mpc.start()
     if len(args) != 3:
         return ["ERROR", "Invalid number of arguments!"]
     else:
-        await mpc.start()
+
 
         own_name = args.pop(0) # => scriptname
         year = args[0]
@@ -119,13 +120,10 @@ async def main():
                 erg = await mpc.output(summe)
                 average_steps = round(erg/divisor)
                 resultlist = [id, searchstring, average_steps]
-                print("Resultlist: ", resultlist)
-
+                #print("Resultlist: ", resultlist)
             if mpc.pid == 0:
                 rwcsv.WriteCSV(defs.PATH_FOR_TEMP_FILES + defs.AVERAGE_FILE, 'w', resultlist)
-        await mpc.shutdown()
-
-
+    await mpc.shutdown()
 
 mpc.run(main())
 

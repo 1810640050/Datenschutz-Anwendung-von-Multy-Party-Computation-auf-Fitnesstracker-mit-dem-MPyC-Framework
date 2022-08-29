@@ -1,21 +1,22 @@
-from InOut import ReadWriteJson as rwj, ReadWriteCSV as rwcsv
-from InOut import ComputeDates as comDt
+from InOut import ReadWriteCSV as rwcsv
 import base64
 import pickle
 import json
 from mpyc.runtime import mpc
 import definitions as defs
 import sys
+from time import time
 
 
 args = sys.argv
 secint = mpc.SecInt()
 
 async def main():
+    await mpc.start()
     if len(args) != 3:
         return ["ERROR", "Invalid number of arguments!"]
     else:
-        await mpc.start()
+
 
         own_name = args.pop(0) # => scriptname
         year = args[0]
@@ -27,7 +28,7 @@ async def main():
 
         # read csv file and store clear values in list
         sec_values = rwcsv.get_CSV_as_List(name)
-        header_line = sec_values.pop(0)
+        sec_values.pop(0)
         clear_values = []
         resultlist = []
 
@@ -42,18 +43,6 @@ async def main():
                 for line in sec_values:
                     id = int(line[0])
                     clear_date = json.loads(line[1])
-                    #sec_steps = json.loads(line[2])
-
-                    # restore to field
-                    #field_of_date = pickle.loads(base64.decodebytes(sec_date.encode('utf-8')))
-                    #field_of_steps = pickle.loads(base64.decodebytes(sec_steps.encode('utf-8')))
-
-                    # compute values
-                    #clear_value_of_timestamp = await mpc.output(field_of_date)
-                    #clear_value_of_steps = await mpc.output(field_of_steps)
-
-                    # get date from timestamp
-                    #clear_date = comDt.get_Datetime_of_Timestamp(clear_value_of_timestamp).date()
 
                     # if date fits searchstring -> store in list
                     if str(clear_date).startswith(searchstring):
@@ -87,19 +76,6 @@ async def main():
             for line in sec_values:
                 id = int(line[0])
                 clear_date = json.loads(line[1])
-                #print()
-                #sec_steps = json.loads(line[2])
-
-                # restore to field
-                #field_of_date = pickle.loads(base64.decodebytes(sec_date.encode('utf-8')))
-                #field_of_steps = pickle.loads(base64.decodebytes(sec_steps.encode('utf-8')))
-
-                # compute values
-                #clear_value_of_timestamp = await mpc.output(field_of_date)
-                #clear_value_of_steps = await mpc.output(field_of_steps)
-
-                # get date from timestamp
-                #clear_date = comDt.get_Datetime_of_Timestamp(clear_value_of_timestamp).date()
 
                 # if date fits searchstring -> store in list
                 #print(clear_date, " ", searchstring)
@@ -108,9 +84,14 @@ async def main():
                     field_of_steps = pickle.loads(base64.decodebytes(sec_steps.encode('utf-8')))
                     clear_values.append([id, str(clear_date), secint(field_of_steps)])
 
-            summe = secint(0)
-            for i in clear_values:
-                summe += i[2]
+            summe1 = (i[2] for i in clear_values)
+            start = time()
+            summe = mpc.sum(summe1)
+            print("\nsumme: ", summe)
+            await mpc.gather(summe)
+            end = time()
+            elapsed_time = end - start
+
             divisor = len(clear_values)
             if divisor < 1:
                 average_steps = "No Data"
@@ -120,14 +101,12 @@ async def main():
                     searchstring = "all Data all Time"
                 erg = await mpc.output(summe)
                 average_steps = round(erg/divisor)
-                resultlist = [id, searchstring, average_steps]
-                print("Resultlist: ", resultlist)
+                resultlist = [id, searchstring, average_steps,"Elapsed time:", elapsed_time]
+                print(resultlist)
 
             if mpc.pid == 0:
                 rwcsv.WriteCSV("../" + defs.PATH_FOR_TEMP_FILES + defs.AVERAGE_FILE, 'w', resultlist)
-        await mpc.shutdown()
-
-
+    await mpc.shutdown()
 
 mpc.run(main())
 
