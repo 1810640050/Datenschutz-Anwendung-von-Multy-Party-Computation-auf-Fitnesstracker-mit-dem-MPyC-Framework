@@ -97,7 +97,7 @@ def versicherung():
     average_file = defs.AVERAGE_FILE
     year = request.args.get("year", "---")
     month = request.args.get("month", "---")
-    searchstring = " " + str(year) + " " + str(month)[:2]
+    searchstring = " " + str(year) + " " + str(month)#[:2]
 
     if len(request.args) == 0: # Seite wird ohne Parameter aufgerufen
         return render_template("sichten.html",special_month=defs.MONTHS_SPECIALS, special_year=defs.YEARS_SPECIALS, zeitraum=defs.ZEITRAUM, schritte=defs.SCHRITTE, month=month, year=year, years=defs.YEARS, months=defs.MONTHS)
