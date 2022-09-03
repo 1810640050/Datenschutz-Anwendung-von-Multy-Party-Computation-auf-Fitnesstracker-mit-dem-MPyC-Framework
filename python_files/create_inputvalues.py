@@ -14,7 +14,7 @@ def _get_Datetime_of_Timestamp(stamp):
     return datetime.fromtimestamp(stamp)
 
 def run():
-    name = defs.PATH_FOR_INPUTFILES + "dailySteps_merged.csv"
+    name = "../" + defs.PATH_FOR_INPUTFILES + "dailySteps_merged.csv"
     daily_steps = rwcsv.get_CSV_as_List(name)
     daily_steps_csv = daily_steps
 

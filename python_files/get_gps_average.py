@@ -17,6 +17,10 @@ file2=sys.stdout
 
 async def main():
     await mpc.start()
+    static_dx = mpc.input(secfxp(71.5))[0]
+    static_dy = mpc.input(secfxp(111.3))[0]
+
+
     path = "../" + defs.PATH_FOR_GPS_SHARES
     name = path + "share_" + str(mpc.pid) + ".csv"
 
@@ -56,9 +60,12 @@ async def main():
         # "Die Konstante 111.3 ist dabei der Abstand zwischen zwei Breitenkreisen in km
         # und 71.5 der durchschnittliche Abstand zwischen zwei Längenkreisen in unseren Breiten."
         # https://www.kompf.de/gps/distcalc.html
-        dx = 71.5 * (lon1 - lon2)
-        dy = 111.3 * (lat1 - lat2)
-        erg = dx * dx + dy * dy
+        # dx = 71.5 * (lon1 - lon2)
+        # dy = 111.3 * (lat1 - lat2)
+        dx = static_dx * (lon1 - lon2)
+        dy = static_dy * (lat1 - lat2)
+        erg = mpc.pow(dx,2) + mpc.pow(dy, 2)
+        #erg = dx * dx + dy * dy
         sec_distances.append(erg)
 
         # calculation progress bar

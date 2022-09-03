@@ -6,8 +6,8 @@ secfxp = mpc.SecFxp()
 
 async def main():
     await mpc.start()
-    a = mpc.input(secfxp(random.randint(0, 64000)))[0]
-    b = mpc.input(secfxp(random.randint(0, 64000)))[0]
+    a = mpc.input(secfxp(random.randint(1000, 64000)))[0]
+    b = mpc.input(secfxp(random.randint(1000, 64000)))[0]
     print("a ", a)
     start = time()
     erg = a * a + b * b
