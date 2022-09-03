@@ -31,9 +31,6 @@ async def main():
         sec_lat = mpc.input(secfxp(latitude))[0]
         sec_lon = mpc.input(secfxp(longitude))[0]
 
-        test1 = await mpc.output(sec_lat)
-        test2 = await mpc.output(sec_lon)
-
         field_of_lat = await mpc.gather(sec_lat)
         field_of_lon = await mpc.gather(sec_lon)
 

@@ -43,7 +43,6 @@ async def main():
 
         calc_list.append([lat, lon])
 
-    print("")
     point1 = 0
     point2 = 1
     sec_distances = []
@@ -57,10 +56,10 @@ async def main():
         # "Die Konstante 111.3 ist dabei der Abstand zwischen zwei Breitenkreisen in km
         # und 71.5 der durchschnittliche Abstand zwischen zwei Längenkreisen in unseren Breiten."
         # https://www.kompf.de/gps/distcalc.html
-
         dx = 71.5 * (lon1 - lon2)
         dy = 111.3 * (lat1 - lat2)
-        sec_distances.append(dx * dx + dy * dy)
+        erg = dx * dx + dy * dy
+        sec_distances.append(erg)
 
         # calculation progress bar
         #string = "\rCalculation Progress: " + str(round(point2 / (len(calc_list) - 1) * 100)) + "%"
@@ -76,10 +75,8 @@ async def main():
     elapsed_time = end - start
     distances = await mpc.output(sec_distances)
     clear_distances = sum(map(sqrt, distances))
-    end2 = time()
-    overall_time = end2 - start
 
-    printlist = ["Distance:",clear_distances, "m", "Overall time:", overall_time," Elapsed time:", elapsed_time]
+    printlist = ["Distance:",clear_distances, "m", "Critical time:", elapsed_time]
     #if mpc.pid == 0:
 
     print(printlist)
