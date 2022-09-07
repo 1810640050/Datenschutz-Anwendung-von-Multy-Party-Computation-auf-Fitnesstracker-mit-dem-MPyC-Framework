@@ -28,7 +28,7 @@ async def main():
         sec_distances.append(mpc.pow(dx, 2) + mpc.pow(dy,2))
 
         # uncomment to test latency with sequential execution:
-        #await mpc.gather(sec_distances[i])
+        await mpc.gather(sec_distances[i])
 
     end = time()
     criticaltime = end - start
