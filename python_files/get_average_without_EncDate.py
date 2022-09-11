@@ -38,7 +38,7 @@ async def main():
             if mpc.pid == 0:
                 rwcsv.WriteCSV(defs.PATH_FOR_TEMP_FILES + defs.AVERAGE_FILE, 'w')
             for month in defs.MONTHS:
-                searchstring = str(year) + ":" + str(month)
+                searchstring = str(year)[:4] + ":" + str(month)[:2]
 
                 for line in sec_values:
                     id = int(line[0])
@@ -71,7 +71,7 @@ async def main():
             elif str(month) == defs.MONTHS_SPECIALS[1]: # All Data of chosen year
                 searchstring = str(year)
             else: # regular requests => year and month
-                searchstring = str(year) + ":" + str(month)
+                searchstring = str(year)[:4] + ":" + str(month)[:2]
 
             for line in sec_values:
                 id = int(line[0])

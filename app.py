@@ -64,6 +64,7 @@ def admin():
         elif len(input_files) == 1 and os.path.isfile(path + str(input_files[0])):
             print("Skript wird ausgeführt")
             os.system(defs.RUN_CREATE_INPUTVALUES)
+            print(defs.RUN_CREATE_INPUTVALUES)
         returnlist = ["1." + defs.FUNCTIONS[1]]
     elif function == defs.FUNCTIONS[2]:
         path = defs.PATH_FOR_INPUTFILES
@@ -97,7 +98,7 @@ def versicherung():
     average_file = defs.AVERAGE_FILE
     year = request.args.get("year", "---")
     month = request.args.get("month", "---")
-    searchstring = " " + str(year)[:4] + " " + str(month)[:2]
+    searchstring = " " + str(year) + " " + str(month)
 
     if len(request.args) == 0: # Seite wird ohne Parameter aufgerufen
         return render_template("sichten.html",special_month=defs.MONTHS_SPECIALS, special_year=defs.YEARS_SPECIALS, zeitraum=defs.ZEITRAUM, schritte=defs.SCHRITTE, month=month, year=year, years=defs.YEARS, months=defs.MONTHS)

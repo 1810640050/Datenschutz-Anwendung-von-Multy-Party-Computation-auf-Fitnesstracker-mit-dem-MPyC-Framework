@@ -2,7 +2,6 @@ import base64
 import json
 import pickle
 import definitions as defs
-
 from InOut import ReadWriteCSV as rwcsv
 from mpyc.runtime import mpc
 
