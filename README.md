@@ -1,7 +1,14 @@
 ## Project for bachelorthesis 
 ## DATENSCHUTZ: Anwendung von Multi-Party Computation auf Fitnesstracker mit dem MPyC -Framework
 
-### Usage:
+### MPyC-Framework
+https://github.com/lschoe/mpyc
+
+https://mpyc.readthedocs.io/en/latest/
+
+### Usage of this project:
+
+Datasets for inputvalues are stored in `/Datasets/Big` or `/Datasets/Small`
 
 #### Daily steps with encrypted date (GUI implementation)
 - run `python app.py`
