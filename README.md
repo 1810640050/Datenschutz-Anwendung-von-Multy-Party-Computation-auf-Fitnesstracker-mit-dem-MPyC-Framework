@@ -39,7 +39,7 @@ NOTE: it takes some time bc the date is encrypted
 create shares:
 
 - store inputfile "dailySteps_merged.csv" in inputfiles_noSecDate
-- run `python create_shares_without_EncDate.py -M3
+- run `python create_shares_without_EncDate.py -M3`
 - NOTE: `-M3` defines 3 parties 
 
 restore Shares:
